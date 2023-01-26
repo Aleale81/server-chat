@@ -7,6 +7,12 @@ const cors = require('cors');
 
 app.use(cors());
 
+const socketIO = require('socket.io')(http, {
+    cors: {
+        origin: "http://localhost:3000"
+    }
+});
+
 //Add this before the app.get() block
 socketIO.on('connection', (socket) => {
     console.log(`⚡: ${socket.id} user just connected!`);
@@ -17,16 +23,12 @@ socketIO.on('connection', (socket) => {
 
 app.get('/api', (req, res) => {
   res.json({
-    message: 'Hello world',
+    message: 'Chatty chat',
   });
 });
 
-const socketIO = require('socket.io')(http, {
-    cors: {
-        origin: "http://localhost:3000"
-    }
-});
 
-app.listen(PORT, () => {
+
+http.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
 });
